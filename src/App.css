@@ -1,0 +1,22 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+body {
+  background-color: #f4f5fd;
+}
+a {
+  text-decoration: none;
+}
+
+.pageContainer {
+  padding: 2rem;
+}
+
+@media screen and (min-width: 1200px) {
+  .pageContainer {
+    margin-left: 20%;
+    margin-right: 5%;
+  }
+}
