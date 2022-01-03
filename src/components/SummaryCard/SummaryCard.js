@@ -41,14 +41,21 @@ const SummaryCard = (props) => {
       <CardContent className={classes.cardContent}>
         <Grid container spacing={3} className={classes.gridContainer}>
           <Grid item>
-            <Typography color="textSecondary" gutterBottom variant="overline">
+            <Typography
+              color="textSecondary"
+              gutterBottom
+              variant="overline"
+              style={{
+                color: `${props.last ? "#eee" : ""}`,
+              }}
+            >
               {title}
             </Typography>
             <Typography
               color="textPrimary"
               variant="h5"
               style={{
-                color: "#0A1929",
+                color: `${props.last ? "#fff" : "#0A1929"}`,
                 fontWeight: "600",
                 fontSize: "1.625rem",
               }}

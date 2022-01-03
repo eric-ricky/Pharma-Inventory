@@ -30,7 +30,12 @@ const PageHeader = (props) => {
     <Paper elevation={0} square className={classes.root}>
       <div className={classes.pageHeader}>
         <div className={classes.pageTitle}>
-          <Typography variant="h4" component="div">
+          <Typography
+            variant="h4"
+            style={{
+              color: "#0A1929",
+            }}
+          >
             {title}
           </Typography>
           <Typography variant="subtitle2" component="div">
