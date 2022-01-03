@@ -9,7 +9,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@material-ui/core";
-import { Mail, MenuRounded, Notifications } from "@material-ui/icons";
+import { MenuRounded, Notifications, LocalLibrary } from "@material-ui/icons";
 import { useStyles, MainNavbar } from "./NavbarStyles";
 import { AuthContext } from "../../context/auth-context";
 
@@ -63,17 +63,23 @@ const Navbar = (props) => {
               },
             }}
           >
-            <MenuRounded
-              className={classes.menuBtn}
-              fontSize="small"
-              sx={{ bgColor: "secondary" }}
-            />
+            <MenuRounded className={classes.menuBtn} fontSize="large" />
           </IconButton>
         )}
 
-        <Typography variant="h6" noWrap component="div" color="textSecondary">
-          PHARMA
-        </Typography>
+        {lgUp && (
+          <>
+            <LocalLibrary />
+            <Typography
+              variant="h6"
+              noWrap
+              component="div"
+              color="textSecondary"
+            >
+              PHARMA
+            </Typography>
+          </>
+        )}
 
         <Box sx={{ flexGrow: 1 }} />
 
@@ -115,23 +121,15 @@ const Navbar = (props) => {
               </Box>
             </>
           )}
+
           {user && (
             <>
-              <IconButton
-                size="large"
-                aria-label="show 4 new mails"
-                color="inherit"
-              >
-                <Badge badgeContent={0} color="error">
-                  <Mail color="#000" />
-                </Badge>
-              </IconButton>
               <IconButton
                 size="large"
                 aria-label="show 17 new notifications"
                 color="inherit"
               >
-                <Badge badgeContent={0} color="error">
+                <Badge badgeContent={1} color="error">
                   <Notifications />
                 </Badge>
               </IconButton>
@@ -144,7 +142,10 @@ const Navbar = (props) => {
                 color="inherit"
                 onClick={() => history.replace("/account")}
               >
-                <Avatar alt="Eric ricky" src="" />
+                <Avatar
+                  alt="Eric ricky"
+                  src="https://images.unsplash.com/photo-1634896941598-b6b500a502a7?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=456&q=80"
+                />
               </IconButton>
             </>
           )}
