@@ -20,6 +20,7 @@ import {
   Storefront,
   PersonAdd,
   LockOutlined,
+  LocalLibrary,
 } from "@material-ui/icons";
 import { useStyles } from "./SidebarStyles";
 import NavItem from "../Navitem/Navitem";
@@ -81,6 +82,8 @@ const Sidebar = (props) => {
       className={classes.container}
     >
       <Box component="div" sx={{ display: "flex", alignItems: "center" }}>
+        <LocalLibrary style={{ color: "#fff" }} size="large" />
+
         <Typography
           className={classes.logo}
           variant="h5"
