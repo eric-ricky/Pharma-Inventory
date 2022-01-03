@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, makeStyles } from "@material-ui/core";
-import { Money, Storefront } from "@material-ui/icons";
+import { AttachMoney, Money, Storefront } from "@material-ui/icons";
 import SummaryCard from "../SummaryCard/SummaryCard";
 import { collection, onSnapshot } from "firebase/firestore";
 import { db } from "../../firebase/config";
@@ -60,7 +60,7 @@ const Sumaryinfo = () => {
     <>
       <Box className={classes.root} marginY={4}>
         <SummaryCard
-          color="#1e2e4c"
+          color="#ff9800"
           title="TOTAL ITEMS"
           value={loading ? "loading.." : totalItems}
           icon={<Storefront />}
@@ -74,17 +74,18 @@ const Sumaryinfo = () => {
         />
 
         <SummaryCard
-          color="#ff9800"
+          color="#1e2e4c"
           title="TOTAL SOLD"
           value={`KES ${totalSold}`}
           icon={<Money />}
         />
 
         <SummaryCard
+          last={true}
           color="#03a9f4"
           title="TOTAL VALUE"
           value={`KES ${totalValue}`}
-          icon={<Money />}
+          icon={<AttachMoney />}
         />
       </Box>
     </>

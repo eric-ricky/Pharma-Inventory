@@ -12,7 +12,7 @@ const Home = () => {
 
   return (
     <>
-      <PageHeader title="Dashboard" subTitle="ALL products summary" />
+      <PageHeader title="Dashboard" subTitle="" />
 
       <PageContainer>
         <Notification notification={notification} />

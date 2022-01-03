@@ -16,6 +16,9 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     justifyContent: "center",
     width: "100%",
+    background: (props) =>
+      props.last &&
+      `linear-gradient(to right bottom, rgb(0, 127, 255), rgb(0, 89, 178) 120%)`,
   },
   cardContent: {
     justifySelf: "center",
@@ -41,7 +44,15 @@ const SummaryCard = (props) => {
             <Typography color="textSecondary" gutterBottom variant="overline">
               {title}
             </Typography>
-            <Typography color="textPrimary" variant="h5">
+            <Typography
+              color="textPrimary"
+              variant="h5"
+              style={{
+                color: "#0A1929",
+                fontWeight: "600",
+                fontSize: "1.625rem",
+              }}
+            >
               {value}
             </Typography>
           </Grid>
