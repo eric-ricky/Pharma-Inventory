@@ -8,16 +8,22 @@ import {
   Typography,
   useTheme,
   useMediaQuery,
+  OutlinedInput,
+  InputAdornment,
+  IconButton,
 } from "@material-ui/core";
 import { db, auth } from "../../firebase/config";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { useHistory } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 const Signup = () => {
   const theme = useTheme();
   const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
   const history = useHistory();
+
+  const [showPassword, setShowPassword] = useState(false);
 
   const [data, setData] = useState({
     firstName: "",
@@ -140,15 +146,27 @@ const Signup = () => {
             name="email"
             value={email}
           />
-          <TextField
+          <OutlinedInput
             fullWidth
-            onChange={changeHandler}
             label="Password"
             margin="normal"
-            type="password"
-            variant="outlined"
             name="password"
             value={password}
+            onChange={changeHandler}
+            type={showPassword ? "text" : "password"}
+            variant="outlined"
+            endAdornment={
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword((val) => !val)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  edge="end"
+                >
+                  {showPassword ? <VisibilityOff /> : <Visibility />}
+                </IconButton>
+              </InputAdornment>
+            }
           />
           <Box
             sx={{

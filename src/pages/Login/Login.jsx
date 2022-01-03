@@ -9,11 +9,15 @@ import {
   Typography,
   Button,
   TextField,
+  InputAdornment,
+  OutlinedInput,
+  IconButton,
 } from "@material-ui/core";
 import { auth } from "../../firebase/config";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useHistory } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
+import { Visibility, VisibilityOff } from "@material-ui/icons";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -21,6 +25,7 @@ const Login = () => {
   const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
   const history = useHistory();
 
+  const [showPassword, setShowPassword] = useState(false);
   const [data, setData] = useState({
     email: "",
     password: "",
@@ -90,7 +95,7 @@ const Login = () => {
             Sign in
           </Typography>
           <Typography color="textSecondary" gutterBottom variant="body2">
-            Sign in on the internal platform
+            Sign in on the pharma platform
           </Typography>
         </Box>
 
@@ -104,15 +109,27 @@ const Login = () => {
           type="email"
           variant="outlined"
         />
-        <TextField
+        <OutlinedInput
           fullWidth
           label="Password"
           margin="normal"
           name="password"
           value={password}
           onChange={changeHandler}
-          type="password"
+          type={showPassword ? "text" : "password"}
           variant="outlined"
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword((val) => !val)}
+                onMouseDown={(e) => e.preventDefault()}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
         />
         {error && (
           <Typography color="error" variant="body2">
