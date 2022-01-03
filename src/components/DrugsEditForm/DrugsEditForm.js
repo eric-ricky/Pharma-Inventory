@@ -9,6 +9,8 @@ import Loader from "../UI/Loader";
 import Select from "../UI/form-controls/Select";
 import Input from "../UI/form-controls/Input";
 
+import IMG from "../../image/drug.jpg";
+
 const initialValues = {
   quantity: 0,
   newQuantity: 0,
@@ -61,17 +63,14 @@ const DrugsEditForm = (props) => {
 
       <Box>
         <Box sx={{ display: "flex", gap: 2, marginBottom: "2rem" }}>
-          <p
-            style={{
-              marginRight: "2rem",
-              border: "solid 5px #000",
-              height: "75px",
-              width: "100px",
-              background: "rgba(0,0,0,0.5)",
-            }}
-          >
-            image
-          </p>
+          <img
+            src={IMG}
+            alt="product picture"
+            height="75px"
+            width="100px"
+            style={{ marginRight: "10px" }}
+          />
+
           <div>
             <h2>{record?.name}</h2>
             <p>
