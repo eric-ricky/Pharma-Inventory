@@ -1,6 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 
+import Chart from "../../components/Chart/Chart";
 import Sumaryinfo from "../../components/SumaryInfo/SumaryInfo";
 import Recentactivities from "../../components/RecentActivities/RecentActivities";
 import PageHeader from "../../components/UI/PageHeader";
@@ -17,8 +18,8 @@ const Home = () => {
       <PageContainer>
         <Notification notification={notification} />
         <Sumaryinfo />
-
         <Recentactivities />
+        <Chart />
       </PageContainer>
     </>
   );

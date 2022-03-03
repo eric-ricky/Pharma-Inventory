@@ -26,7 +26,7 @@ import { useStyles } from "./SidebarStyles";
 import NavItem from "../Navitem/Navitem";
 import { signOut } from "firebase/auth";
 import { auth } from "../../firebase/config";
-import { AuthContext } from "../../context/auth-context";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const items = [
   {
@@ -52,7 +52,7 @@ const items = [
 ];
 
 const Sidebar = (props) => {
-  const { user } = useContext(AuthContext);
+  const [user] = useAuthState(auth);
 
   const { isOpen, closeHandler } = props;
   const classes = useStyles();
@@ -90,7 +90,7 @@ const Sidebar = (props) => {
           noWrap
           color="neutral.500"
         >
-          PHARMA
+          Goodlife Pharmacy
         </Typography>
 
         <Box sx={{ flexGrow: 1 }} />

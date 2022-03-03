@@ -61,9 +61,9 @@ const AccountForm = () => {
     const docRef = doc(db, "users", auth.currentUser.uid);
     const unsub = onSnapshot(docRef, (doc) => {
       const data = {
-        firstName: doc.data().firstName,
-        lastName: doc.data().lastName,
-        email: doc.data().email,
+        firstName: doc.data()?.firstName,
+        lastName: doc.data()?.lastName,
+        email: doc.data()?.email,
         phoneNumber: "",
       };
       setInitialValues(data);

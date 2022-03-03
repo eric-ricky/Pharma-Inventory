@@ -1,6 +1,6 @@
 import { createSvgIcon } from "@material-ui/core";
 
-const Google = createSvgIcon(
+export const Google = createSvgIcon(
   <svg
     xmlns="http://www.w3.org/2000/svg"
     viewBox="0 0 20 20"
@@ -10,5 +10,3 @@ const Google = createSvgIcon(
   </svg>,
   "Google"
 );
-
-export default Google;

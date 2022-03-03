@@ -13,11 +13,14 @@ import {
   OutlinedInput,
   IconButton,
 } from "@material-ui/core";
-import { auth } from "../../firebase/config";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth, provider } from "../../firebase/config";
+import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useHistory } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+
+import { Google as GoogleIcon } from "../../icons/google";
+import { Facebook as FacebookIcon } from "../../icons/facebook";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -51,7 +54,6 @@ const Login = () => {
     }
 
     try {
-      // loging in user
       await signInWithEmailAndPassword(auth, email, password);
 
       setData({
@@ -70,10 +72,20 @@ const Login = () => {
         })
       );
 
-      // redirecting to home
       history.replace("/");
     } catch (error) {
       setData({ ...data, loading: false, error: error.message });
+    }
+  };
+
+  const signIn = async () => {
+    console.log("started...");
+    try {
+      console.log("Logging...");
+      const result = await signInWithPopup(auth, provider);
+      console.log("Loged in:", result);
+    } catch (error) {
+      console.log("error---:", error);
     }
   };
 
@@ -89,13 +101,44 @@ const Login = () => {
         paddingX: lgUp ? 0 : theme.spacing(0.5),
       }}
     >
+      <Box sx={{ mb: 5, textAlign: "center" }}>
+        <Typography color="textPrimary" variant="h4">
+          Sign in
+        </Typography>
+        <Typography color="textSecondary" gutterBottom variant="body2">
+          Sign in to use the platform
+        </Typography>
+      </Box>
+
       <form onSubmit={submitHandler}>
-        <Box sx={{ mb: 5, textAlign: "center" }}>
-          <Typography color="textPrimary" variant="h4">
-            Sign in
-          </Typography>
-          <Typography color="textSecondary" gutterBottom variant="body2">
-            Sign in on the pharma platform
+        <Box sx={{ mb: 4, textAlign: "center" }}>
+          <Button
+            fullWidth
+            color="#e57373"
+            style={{ background: "#e57373", color: "#fff" }}
+            startIcon={<GoogleIcon />}
+            onClick={signIn}
+            size="large"
+            variant="contained"
+          >
+            Login with Google
+          </Button>
+          <Button
+            fullWidth
+            color="#e57373"
+            style={{ background: "#64b5f6", marginTop: "1rem", color: "#fff" }}
+            startIcon={<FacebookIcon />}
+            onClick={signIn}
+            size="large"
+            variant="contained"
+          >
+            Login with Facebook
+          </Button>
+        </Box>
+
+        <Box sx={{ mb: 2, textAlign: "center" }}>
+          <Typography align="center" color="textSecondary" variant="body1">
+            or login with email address
           </Typography>
         </Box>
 
@@ -111,13 +154,13 @@ const Login = () => {
         />
         <OutlinedInput
           fullWidth
-          label="Password"
           margin="normal"
           name="password"
           value={password}
           onChange={changeHandler}
           type={showPassword ? "text" : "password"}
           variant="outlined"
+          label="Password"
           endAdornment={
             <InputAdornment position="end">
               <IconButton
@@ -131,6 +174,7 @@ const Login = () => {
             </InputAdornment>
           }
         />
+
         {error && (
           <Typography color="error" variant="body2">
             {error}
@@ -153,6 +197,7 @@ const Login = () => {
             {loading ? "Signing..." : "Sign In Now"}
           </Button>
         </Box>
+
         <Typography
           style={{ textAlign: "center" }}
           color="textSecondary"

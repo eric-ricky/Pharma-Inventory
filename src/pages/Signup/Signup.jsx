@@ -12,11 +12,14 @@ import {
   InputAdornment,
   IconButton,
 } from "@material-ui/core";
-import { db, auth } from "../../firebase/config";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { db, auth, provider } from "../../firebase/config";
+import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { useHistory } from "react-router-dom";
 import { Visibility, VisibilityOff } from "@material-ui/icons";
+
+import { Google as GoogleIcon } from "../../icons/google";
+import { Facebook as FacebookIcon } from "../../icons/facebook";
 
 const Signup = () => {
   const theme = useTheme();
@@ -57,7 +60,10 @@ const Signup = () => {
         auth,
         email,
         password
-      );
+      ).then((userCredential) => {
+        const user = userCredential.user;
+        console.log(user);
+      });
 
       // saving user info in firestore
       const docRef = doc(db, "users", result.user.uid);
@@ -88,6 +94,17 @@ const Signup = () => {
     }
   };
 
+  const signIn = async () => {
+    console.log("started...");
+    try {
+      console.log("Logging...");
+      const result = await signInWithPopup(auth, provider);
+      console.log("Loged in:", result);
+    } catch (error) {
+      console.log("error---:", error);
+    }
+  };
+
   return (
     <Box
       component="div"
@@ -100,116 +117,151 @@ const Signup = () => {
         paddingX: lgUp ? 0 : theme.spacing(0.5),
       }}
     >
-      <Box
+      {/* <Box
         component="main"
         sx={{
           alignItems: "center",
           display: "flex",
-          flexGrow: 1,
+          // flexGrow: 1,
           minHeight: "100%",
         }}
-      >
-        <form onSubmit={submitHandler}>
-          <Box sx={{ my: 3 }}>
-            <Typography color="textPrimary" variant="h4">
-              Create a new account
-            </Typography>
-            <Typography color="textSecondary" gutterBottom variant="body2">
-              Use your email to create a new account
-            </Typography>
-          </Box>
-          <TextField
-            fullWidth
-            onChange={changeHandler}
-            label="First Name"
-            margin="normal"
-            variant="outlined"
-            name="firstName"
-            value={firstName}
-          />
-          <TextField
-            fullWidth
-            onChange={changeHandler}
-            label="Last Name"
-            margin="normal"
-            variant="outlined"
-            name="lastName"
-            value={lastName}
-          />
-          <TextField
-            fullWidth
-            onChange={changeHandler}
-            label="Email Address"
-            margin="normal"
-            type="email"
-            variant="outlined"
-            name="email"
-            value={email}
-          />
-          <OutlinedInput
-            fullWidth
-            label="Password"
-            margin="normal"
-            name="password"
-            value={password}
-            onChange={changeHandler}
-            type={showPassword ? "text" : "password"}
-            variant="outlined"
-            endAdornment={
-              <InputAdornment position="end">
-                <IconButton
-                  aria-label="toggle password visibility"
-                  onClick={() => setShowPassword((val) => !val)}
-                  onMouseDown={(e) => e.preventDefault()}
-                  edge="end"
-                >
-                  {showPassword ? <VisibilityOff /> : <Visibility />}
-                </IconButton>
-              </InputAdornment>
-            }
-          />
-          <Box
-            sx={{
-              alignItems: "center",
-              display: "flex",
-              ml: -1,
-            }}
-          >
-            <Checkbox name="policy" />
-            <Typography color="textSecondary" variant="body2">
-              I have read the <Link to="/">Terms and Conditions</Link>
-            </Typography>
-          </Box>
-
-          {error && (
-            <Typography color="error" variant="body2">
-              {error}
-            </Typography>
-          )}
-
-          {success && (
-            <Typography color="success" variant="body2">
-              {success}
-            </Typography>
-          )}
-
-          <Box sx={{ py: 2 }}>
-            <Button
-              color="primary"
-              fullWidth
-              size="large"
-              type="submit"
-              variant="contained"
-            >
-              {loading ? "Loading.." : "Sign Up Now"}
-            </Button>
-          </Box>
-          <Typography color="textSecondary" variant="body2">
-            Have an account? <Link to="/login">Sign In</Link>
+      > */}
+      <form onSubmit={submitHandler}>
+        <Box sx={{ mb: 5, textAlign: "center" }}>
+          <Typography color="textPrimary" variant="h4">
+            Sign Up
           </Typography>
-        </form>
-      </Box>
+          <Typography color="textSecondary" gutterBottom variant="body2">
+            Create a new account
+          </Typography>
+        </Box>
+
+        <Box sx={{ mb: 4, textAlign: "center" }}>
+          <Button
+            fullWidth
+            color="#e57373"
+            style={{ background: "#e57373", color: "#fff" }}
+            startIcon={<GoogleIcon />}
+            onClick={signIn}
+            size="large"
+            variant="contained"
+          >
+            Login with Google
+          </Button>
+          <Button
+            fullWidth
+            color="#e57373"
+            style={{
+              background: "#64b5f6",
+              marginTop: "1rem",
+              color: "#fff",
+            }}
+            startIcon={<FacebookIcon />}
+            onClick={signIn}
+            size="large"
+            variant="contained"
+          >
+            Login with Facebook
+          </Button>
+        </Box>
+
+        <Box sx={{ mb: 2, textAlign: "center" }}>
+          <Typography align="center" color="textSecondary" variant="body1">
+            or use your email to create a new account
+          </Typography>
+        </Box>
+        <TextField
+          fullWidth
+          onChange={changeHandler}
+          label="First Name"
+          margin="normal"
+          variant="outlined"
+          name="firstName"
+          value={firstName}
+        />
+        <TextField
+          fullWidth
+          onChange={changeHandler}
+          label="Last Name"
+          margin="normal"
+          variant="outlined"
+          name="lastName"
+          value={lastName}
+        />
+        <TextField
+          fullWidth
+          onChange={changeHandler}
+          label="Email Address"
+          margin="normal"
+          type="email"
+          variant="outlined"
+          name="email"
+          value={email}
+        />
+        <OutlinedInput
+          fullWidth
+          label="Password"
+          margin="normal"
+          name="password"
+          value={password}
+          onChange={changeHandler}
+          type={showPassword ? "text" : "password"}
+          variant="outlined"
+          endAdornment={
+            <InputAdornment position="end">
+              <IconButton
+                aria-label="toggle password visibility"
+                onClick={() => setShowPassword((val) => !val)}
+                onMouseDown={(e) => e.preventDefault()}
+                edge="end"
+              >
+                {showPassword ? <VisibilityOff /> : <Visibility />}
+              </IconButton>
+            </InputAdornment>
+          }
+        />
+        <Box
+          sx={{
+            alignItems: "center",
+            display: "flex",
+            ml: -1,
+          }}
+        >
+          <Checkbox name="policy" />
+          <Typography color="textSecondary" variant="body2">
+            I have read the <Link to="/">Terms and Conditions</Link>
+          </Typography>
+        </Box>
+
+        {error && (
+          <Typography color="error" variant="body2">
+            {error}
+          </Typography>
+        )}
+
+        {success && (
+          <Typography color="success" variant="body2">
+            {success}
+          </Typography>
+        )}
+
+        <Box sx={{ py: 2 }}>
+          <Button
+            color="primary"
+            fullWidth
+            size="large"
+            type="submit"
+            variant="contained"
+          >
+            {loading ? "Loading.." : "Sign Up Now"}
+          </Button>
+        </Box>
+        <Typography color="textSecondary" variant="body2">
+          Have an account? <Link to="/login">Sign In</Link>
+        </Typography>
+      </form>
     </Box>
+    // </Box>
   );
 };
 

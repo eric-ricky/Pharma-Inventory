@@ -1,10 +1,12 @@
 import "./App.css";
-import React, { useContext, useState } from "react";
-import { AuthContext } from "./context/auth-context";
+import React, { useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 
 import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
+import Loading from "./components/Loading/Loading";
 
 import Home from "./pages/Home/Home";
 import Activities from "./pages/Activities/Activities";
@@ -12,10 +14,14 @@ import Signup from "./pages/Signup/Signup";
 import Login from "./pages/Login/Login";
 import Drugs from "./pages/Drugs/Drugs";
 import Account from "./pages/Account/Account";
+import { auth } from "./firebase/config";
 
 const App = () => {
-  const { user } = useContext(AuthContext);
+  const [user, loading] = useAuthState(auth);
   const [isOpen, setIsOpen] = useState(false);
+
+  console.log(user);
+  console.log(loading);
 
   const openHandler = () => {
     setIsOpen(true);
@@ -23,6 +29,8 @@ const App = () => {
   const closeHandler = () => {
     setIsOpen(false);
   };
+
+  if (loading) return <Loading />;
 
   return (
     <BrowserRouter>
@@ -35,6 +43,7 @@ const App = () => {
           </Switch>
         </>
       )}
+
       {user && (
         <>
           <Navbar openHandler={openHandler} closeHandler={closeHandler} />

@@ -4,13 +4,14 @@ export const useStyles = makeStyles((theme) => ({
   container: {
     height: "100vh",
     width: "100%",
-    paddingTop: theme.spacing(10),
+    paddingTop: theme.spacing(3),
     backgroundColor: "#111827",
     padding: theme.spacing(7),
   },
   logo: {
     color: "#fff",
     fontWeight: 900,
+    fontSize: "18px",
   },
   close: {
     color: "#fff",

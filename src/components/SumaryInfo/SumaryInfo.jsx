@@ -23,38 +23,38 @@ const Sumaryinfo = () => {
   const classes = useStyles();
 
   const [loading, setLoading] = useState(false);
-  const [totalValue, setTotalValue] = useState(0);
-  const [totalQuantity, setTotalQuantity] = useState(0);
-  const [totalItems, setTotalItems] = useState(0);
-  const [totalSold, setTotalSold] = useState(0);
+  // const [totalValue, setTotalValue] = useState(0);
+  // const [totalQuantity, setTotalQuantity] = useState(0);
+  // const [totalItems, setTotalItems] = useState(0);
+  // const [totalSold, setTotalSold] = useState(0);
 
-  useEffect(() => {
-    setLoading(true);
-    const colRef = collection(db, "drugs");
-    const unsub = onSnapshot(colRef, (snap) => {
-      let documents = [];
-      snap.forEach((doc) => documents.push({ ...doc.data() }));
-      const value = documents
-        .map((doc) => doc.totalValue)
-        .reduce((acc, cur) => acc + cur, 0);
-      const quantity = documents
-        .map((doc) => +doc.quantity)
-        .reduce((acc, cur) => acc + cur, 0);
-      const sold = documents
-        .map((doc) => +doc.price * doc.sold)
-        .reduce((acc, cur) => acc + cur, 0);
-      const items = documents.length;
+  // useEffect(() => {
+  //   setLoading(true);
+  //   const colRef = collection(db, "drugs");
+  //   const unsub = onSnapshot(colRef, (snap) => {
+  //     let documents = [];
+  //     snap.forEach((doc) => documents.push({ ...doc.data() }));
+  //     const value = documents
+  //       .map((doc) => doc.totalValue)
+  //       .reduce((acc, cur) => acc + cur, 0);
+  //     const quantity = documents
+  //       .map((doc) => +doc.quantity)
+  //       .reduce((acc, cur) => acc + cur, 0);
+  //     const sold = documents
+  //       .map((doc) => +doc.price * doc.sold)
+  //       .reduce((acc, cur) => acc + cur, 0);
+  //     const items = documents.length;
 
-      // setData;
-      setTotalValue(value);
-      setTotalQuantity(quantity);
-      setTotalSold(sold);
-      setTotalItems(items);
-      setLoading(false);
-    });
+  //     // setData;
+  //     setTotalValue(value);
+  //     setTotalQuantity(quantity);
+  //     setTotalSold(sold);
+  //     setTotalItems(items);
+  //     setLoading(false);
+  //   });
 
-    return unsub;
-  }, []);
+  //   return unsub;
+  // }, []);
 
   return (
     <>
@@ -62,21 +62,24 @@ const Sumaryinfo = () => {
         <SummaryCard
           color="#ff9800"
           title="TOTAL ITEMS"
-          value={loading ? "loading.." : totalItems}
+          // value={loading ? "loading.." : totalItems}
+          value={542}
           icon={<Storefront />}
         />
 
         <SummaryCard
           color="#123efc"
           title="TOTAL QUANTITY"
-          value={`${totalQuantity} units`}
+          value={`${5220} units`}
+          // value={`${totalQuantity} units`}
           icon={<Money />}
         />
 
         <SummaryCard
           color="#1e2e4c"
           title="TOTAL SOLD"
-          value={`KES ${totalSold}`}
+          // value={`KES ${totalSold}`}
+          value={`KES ${125220}`}
           icon={<Money />}
         />
 
@@ -84,7 +87,8 @@ const Sumaryinfo = () => {
           last={true}
           color="#03a9f4"
           title="TOTAL VALUE"
-          value={`KES ${totalValue}`}
+          value={`KES ${702500}`}
+          // value={`KES ${totalValue}`}
           icon={<AttachMoney />}
         />
       </Box>

@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   Avatar,
   Badge,
@@ -11,16 +11,18 @@ import {
 } from "@material-ui/core";
 import { MenuRounded, Notifications, LocalLibrary } from "@material-ui/icons";
 import { useStyles, MainNavbar } from "./NavbarStyles";
-import { AuthContext } from "../../context/auth-context";
 
 import { Link, useHistory } from "react-router-dom";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../../firebase/config";
 
 const Navbar = (props) => {
-  const { user } = useContext(AuthContext);
+  const [user] = useAuthState(auth);
 
   const history = useHistory();
 
   const { openHandler } = props;
+
   const classes = useStyles();
   const theme = useTheme();
   const lgUp = useMediaQuery(theme.breakpoints.up("lg"));
@@ -68,17 +70,24 @@ const Navbar = (props) => {
         )}
 
         {lgUp && (
-          <>
+          <Box
+            style={{
+              paddingLeft: "1.675rem",
+              display: "flex",
+              alignItems: "center",
+            }}
+          >
             <LocalLibrary />
             <Typography
-              variant="h6"
+              variant="h5"
               noWrap
               component="div"
               color="textSecondary"
+              style={{ fontSize: "18px", fontWeight: "700" }}
             >
-              PHARMA
+              Goodlife Pharmacy
             </Typography>
-          </>
+          </Box>
         )}
 
         <Box sx={{ flexGrow: 1 }} />
@@ -106,7 +115,6 @@ const Navbar = (props) => {
               <Box
                 disableGutters
                 sx={{
-                  // display: "flex",
                   mb: 0.5,
                   py: 0,
                   px: 2,

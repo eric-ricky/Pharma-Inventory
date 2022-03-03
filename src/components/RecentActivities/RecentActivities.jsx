@@ -36,6 +36,7 @@ const Recentactivities = () => {
 
     return unsub;
   }, []);
+
   return (
     <Box
       component="div"
