@@ -55,7 +55,7 @@ const App = () => {
 
             <Route path={"/account"} component={Account} exact />
             <Route path={"/login"} component={user ? Home : Login} />
-            <Route path={"/sign-up"} component={Signup} />
+            <Route path={"/sign-up"} component={user ? Home : Signup} />
             <Route path={"/"} component={Home} exact />
           </Switch>
         </>

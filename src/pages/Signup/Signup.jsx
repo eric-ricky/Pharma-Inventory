@@ -12,7 +12,7 @@ import {
   InputAdornment,
   IconButton,
 } from "@material-ui/core";
-import { db, auth, provider } from "../../firebase/config";
+import { db, auth, facebook, google } from "../../firebase/config";
 import { createUserWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { doc, setDoc, Timestamp } from "firebase/firestore";
 import { useHistory } from "react-router-dom";
@@ -94,11 +94,21 @@ const Signup = () => {
     }
   };
 
-  const signIn = async () => {
+  const signInWithGoogle = async () => {
     console.log("started...");
     try {
       console.log("Logging...");
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, google);
+      console.log("Loged in:", result);
+    } catch (error) {
+      console.log("error---:", error);
+    }
+  };
+  const signInWithFacebook = async () => {
+    console.log("started...");
+    try {
+      console.log("Logging...");
+      const result = await signInWithPopup(auth, facebook);
       console.log("Loged in:", result);
     } catch (error) {
       console.log("error---:", error);
@@ -117,15 +127,6 @@ const Signup = () => {
         paddingX: lgUp ? 0 : theme.spacing(0.5),
       }}
     >
-      {/* <Box
-        component="main"
-        sx={{
-          alignItems: "center",
-          display: "flex",
-          // flexGrow: 1,
-          minHeight: "100%",
-        }}
-      > */}
       <form onSubmit={submitHandler}>
         <Box sx={{ mb: 5, textAlign: "center" }}>
           <Typography color="textPrimary" variant="h4">
@@ -142,7 +143,7 @@ const Signup = () => {
             color="#e57373"
             style={{ background: "#e57373", color: "#fff" }}
             startIcon={<GoogleIcon />}
-            onClick={signIn}
+            onClick={signInWithGoogle}
             size="large"
             variant="contained"
           >
@@ -157,7 +158,7 @@ const Signup = () => {
               color: "#fff",
             }}
             startIcon={<FacebookIcon />}
-            onClick={signIn}
+            onClick={signInWithFacebook}
             size="large"
             variant="contained"
           >
@@ -261,7 +262,6 @@ const Signup = () => {
         </Typography>
       </form>
     </Box>
-    // </Box>
   );
 };
 

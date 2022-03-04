@@ -13,7 +13,7 @@ import {
   OutlinedInput,
   IconButton,
 } from "@material-ui/core";
-import { auth, provider } from "../../firebase/config";
+import { auth, google, facebook } from "../../firebase/config";
 import { signInWithEmailAndPassword, signInWithPopup } from "firebase/auth";
 import { useHistory } from "react-router-dom";
 import { uiActions } from "../../store/ui-slice";
@@ -78,11 +78,21 @@ const Login = () => {
     }
   };
 
-  const signIn = async () => {
+  const signInWithGoogle = async () => {
     console.log("started...");
     try {
       console.log("Logging...");
-      const result = await signInWithPopup(auth, provider);
+      const result = await signInWithPopup(auth, google);
+      console.log("Loged in:", result);
+    } catch (error) {
+      console.log("error---:", error);
+    }
+  };
+  const signInWithFacebook = async () => {
+    console.log("started...");
+    try {
+      console.log("Logging...");
+      const result = await signInWithPopup(auth, facebook);
       console.log("Loged in:", result);
     } catch (error) {
       console.log("error---:", error);
@@ -117,7 +127,7 @@ const Login = () => {
             color="#e57373"
             style={{ background: "#e57373", color: "#fff" }}
             startIcon={<GoogleIcon />}
-            onClick={signIn}
+            onClick={signInWithGoogle}
             size="large"
             variant="contained"
           >
@@ -128,7 +138,7 @@ const Login = () => {
             color="#e57373"
             style={{ background: "#64b5f6", marginTop: "1rem", color: "#fff" }}
             startIcon={<FacebookIcon />}
-            onClick={signIn}
+            onClick={signInWithFacebook}
             size="large"
             variant="contained"
           >
